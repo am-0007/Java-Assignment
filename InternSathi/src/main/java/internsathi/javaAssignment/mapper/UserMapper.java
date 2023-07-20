@@ -2,8 +2,11 @@ package internsathi.javaAssignment.mapper;
 
 
 import internsathi.javaAssignment.Enum.Role;
+import internsathi.javaAssignment.dto.UserRegistrationDto;
+import internsathi.javaAssignment.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
@@ -27,5 +30,19 @@ public interface UserMapper {
                 .filter(userRole-> userRole.equals(Role.USER) || userRole.equals(Role.ADMIN))
                 .map(Role::valueOf)
                 .collect(Collectors.toList());
+    }
+
+    default User conversionFromRegistrationDtoToUser(UserRegistrationDto registrationDto) {
+        return User.builder()
+                .username(registrationDto.getUsername())
+                .name(registrationDto.getName())
+                .address(registrationDto.getAddress())
+                .dateOfBirth(registrationDto.getDateOfBirth())
+                .email(registrationDto.getEmail())
+                .phoneNumber(registrationDto.getPhoneNumber())
+                .password(registrationDto.getPassword())
+                .role(registrationDto.getRole())
+                .build();
+
     }
 }

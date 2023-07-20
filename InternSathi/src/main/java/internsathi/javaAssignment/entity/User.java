@@ -2,6 +2,7 @@ package internsathi.javaAssignment.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Builder
 public class User {
 
     @Id
@@ -23,6 +25,7 @@ public class User {
     private String username;
     private String password;
     private String email;
+    @Column(unique = true)
     private String phoneNumber;
     private String address;
     private LocalDate dateOfBirth;

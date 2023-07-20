@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: intern-sathi
+    name: internsathi
 
   jpa:
     hibernate:

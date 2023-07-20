@@ -2,19 +2,33 @@ package internsathi.javaAssignment.controller;
 
 import internsathi.javaAssignment.dto.UserRegistrationDto;
 import internsathi.javaAssignment.dto.UserRegistrationResponseDto;
+import internsathi.javaAssignment.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @RequestMapping("/internsathi/user")
 public class UserController {
 
-    @GetMapping("/registerUser")
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @PostMapping("/registerUser")
     public ResponseEntity<UserRegistrationResponseDto> registerUser(@RequestBody UserRegistrationDto userRegistrationDetail) {
-        return null;
+        try {
+            return new ResponseEntity<>(userService.registerUser(userRegistrationDetail), HttpStatus.CREATED);
+        } catch (Exception e) {
+            UserRegistrationResponseDto userRegistrationFailedResponse = UserRegistrationResponseDto.builder()
+                    .message("User registration Failed")
+                    .status(HttpStatus.BAD_REQUEST)
+                    .username(userRegistrationDetail.getUsername())
+                    .build();
+            return new ResponseEntity<>(userRegistrationFailedResponse, HttpStatus.BAD_REQUEST);
+        }
     }
 }

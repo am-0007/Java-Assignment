@@ -19,4 +19,27 @@ public class UserRegistrationDto {
     private LocalDate dateOfBirth;
     private String role;
 
+    public UserRegistrationDto(String name, String username, String password, String email, String phoneNumber, String address, LocalDate dateOfBirth, String role) {
+        this.name = name;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.dateOfBirth = dateOfBirth;
+        this.role = role;
+    }
+
+    public UserRegistrationDto() {
+    }
+
+    public UserRegistrationDto(String name, String username, String password, String email, String phoneNumber, String address, LocalDate dateOfBirth) {
+        this.name = name;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+        this.dateOfBirth = dateOfBirth;
+    }
 }

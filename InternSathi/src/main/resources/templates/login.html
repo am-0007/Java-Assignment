@@ -7,6 +7,9 @@
 </head>
 <body>
 <div class="container">
+    <div class="logo">
+        <h1>InternSathi</h1>
+    </div>
     <form method="POST" th:object="${login}" class="login-form" th:action="@{/internsathi/user/login}">
         <h1>Login</h1>
         <div th:if="${param.error}">
@@ -22,9 +25,10 @@
             <input th:field="*{password}" type="password" id="password" name="password" required>
         </div>
         <button type="submit">Login</button>
+        <h5><a th:href="@{/#}">forget password?</a></h5>
         <h5>
             Not registered yet!!
-            <a th:href="@{/register}">click here</a>
+            <a th:href="@{/internsathi/user/registerUser}">click here</a>
         </h5>
     </form>
 </div>

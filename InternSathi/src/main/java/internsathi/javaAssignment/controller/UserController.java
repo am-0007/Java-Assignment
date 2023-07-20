@@ -24,7 +24,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/registerUser")
+    /*@PostMapping("/registerUser")
     public ResponseEntity<UserRegistrationResponseDto> registerUser(@RequestBody UserRegistrationDto userRegistrationDetail) {
         try {
             return new ResponseEntity<>(userService.registerUser(userRegistrationDetail), HttpStatus.CREATED);
@@ -36,7 +36,7 @@ public class UserController {
                     .build();
             return new ResponseEntity<>(userRegistrationFailedResponse, HttpStatus.BAD_REQUEST);
         }
-    }
+    }*/
 
         @GetMapping("/login")
         public String loginPage(Model model, @RequestParam(defaultValue = "false", value = "error") boolean error) {

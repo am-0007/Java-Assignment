@@ -26,10 +26,15 @@ public interface UserMapper {
                 .map(String::trim)
                 .toList();
 
-        return roles.stream()
-                .filter(userRole-> userRole.equals(Role.USER) || userRole.equals(Role.ADMIN))
-                .map(Role::valueOf)
-                .collect(Collectors.toList());
+        List<Role> roleList = new ArrayList<>();
+        roles.forEach(authority -> {
+            if (authority.equals(Role.USER.name())) {
+                roleList.add(Role.USER);
+            } else if (authority.equals(Role.ADMIN.name())) {
+                roleList.add(Role.ADMIN);
+            }
+        });
+        return roleList;
     }
 
     default User conversionFromRegistrationDtoToUser(UserRegistrationDto registrationDto) {

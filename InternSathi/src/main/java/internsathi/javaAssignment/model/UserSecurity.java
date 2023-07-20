@@ -16,11 +16,15 @@ public record UserSecurity(User user) implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return UserMapper.USER_MAPPER_INSTANCE
+        List<SimpleGrantedAuthority> authorities = UserMapper.USER_MAPPER_INSTANCE
                 .parseRole(user.getRole())
                 .stream()
-                .map(role -> new SimpleGrantedAuthority(role.name()))
+                .map(role -> {
+                    return new SimpleGrantedAuthority(role.name());
+                })
                 .collect(Collectors.toList());
+        System.out.println("authorities: " + authorities);
+        return authorities;
     }
 
     @Override

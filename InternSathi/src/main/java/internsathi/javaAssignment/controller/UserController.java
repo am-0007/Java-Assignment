@@ -1,14 +1,20 @@
 package internsathi.javaAssignment.controller;
 
+import internsathi.javaAssignment.dto.LoginDto;
 import internsathi.javaAssignment.dto.UserRegistrationDto;
 import internsathi.javaAssignment.dto.UserRegistrationResponseDto;
 import internsathi.javaAssignment.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+import java.security.Principal;
+
+//@RestController
+@Controller
 @RequestMapping("/internsathi/user")
 public class UserController {
 
@@ -31,4 +37,23 @@ public class UserController {
             return new ResponseEntity<>(userRegistrationFailedResponse, HttpStatus.BAD_REQUEST);
         }
     }
+
+        @GetMapping("/login")
+        public String loginPage(Model model, @RequestParam(defaultValue = "false", value = "error") boolean error) {
+            model.addAttribute("login", new LoginDto());
+            if (error) {
+                model.addAttribute("error", true);
+            }
+            return "login";
+        }
+
+        @PostMapping("/login")
+        public String login(Authentication authentication) {
+            if (authentication.isAuthenticated()) {
+                return "redirect:/internsathi/user/home";
+            }
+            System.out.println(authentication.isAuthenticated());
+            return "redirect:/internsathi/user/login?error=true";
+        }
+
 }

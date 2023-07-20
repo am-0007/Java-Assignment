@@ -9,10 +9,10 @@
 <div class="container">
     <form th:object="${registerUser}" method="POST" class="register-form" th:action="@{/internsathi/user/registerUser}">
         <h1 class="logo">InternSathi</h1>
-        <div th:if="${isRegistrationSuccessful}">
+        <div th:if="${isRegistrationSuccessful}" class="success-message">
             <h4>User registered Successfully</h4>
         </div>
-        <div th:if="${param.isRegistrationError}">
+        <div th:if="${param.isRegistrationError}" class="error-message">
             <h4>User registration failed</h4>
         </div>
         <div class="form-group">

@@ -7,6 +7,7 @@ body {
     align-items: center;
     height: 100vh;
     background-color: #f1f1f1;
+    background-color: #f1f1f1;
 }
 
 .container {
@@ -58,8 +59,67 @@ button:hover {
     background-color: #0056b3;
 }
 
+.success-message, .error-message {
+    background-color: #ffcccc;
+    padding: 5px;
+    border: 1px solid #ff0000;
+    border-radius: 5px;
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+header {
+    background-color: #007bff;
+    padding: 10px 0;
+}
+
+header .navbar-brand {
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+header .navbar-nav .nav-link {
+    color: #fff;
+}
+
 .logo {
     font-style: italic;
     font-family: cursive;
     color: salmon;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.footer {
+    background-color: #f1f1f1;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.dashboard-links {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.dashboard-links a {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    margin: 0 5px;
+}
+
+.dashboard-links a:hover {
+    background-color: #0056b3;
+}
+
+/* New CSS for the Logout Button */
+#logoutButton {
+    margin-right: 10px;
 }

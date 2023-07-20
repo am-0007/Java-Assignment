@@ -5,5 +5,5 @@ import internsathi.javaAssignment.dto.UserRegistrationResponseDto;
 
 public interface UserService {
 
-    public UserRegistrationResponseDto registerUser(UserRegistrationDto userRegistrationDetails) throws Exception;
+    UserRegistrationResponseDto registerUser(UserRegistrationDto userRegistrationDetails) throws Exception;
 }

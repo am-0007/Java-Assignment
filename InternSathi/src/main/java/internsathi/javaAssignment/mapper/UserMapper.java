@@ -46,7 +46,7 @@ public interface UserMapper {
                 .email(registrationDto.getEmail())
                 .phoneNumber(registrationDto.getPhoneNumber())
                 .password(registrationDto.getPassword())
-                .role(registrationDto.getRole())
+                .role(Role.USER.name())
                 .build();
 
     }

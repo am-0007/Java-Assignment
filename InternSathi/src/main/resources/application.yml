@@ -1,0 +1,17 @@
+server:
+  port: 7999
+
+spring:
+  application:
+    name: intern-sathi
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/internsathi
+    username: postgres
+    password: 8956
+

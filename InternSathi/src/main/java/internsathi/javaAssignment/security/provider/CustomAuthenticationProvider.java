@@ -3,6 +3,7 @@ package internsathi.javaAssignment.security.provider;
 import internsathi.javaAssignment.mapper.UserMapper;
 import internsathi.javaAssignment.serviceImplementation.UserServiceImplementation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 
-@Component
+@Configuration
 @RequiredArgsConstructor
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 

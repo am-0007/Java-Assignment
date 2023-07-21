@@ -35,7 +35,11 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         authorize -> authorize
                                 .requestMatchers("/css/**").permitAll()
-                                .requestMatchers("/internsathi/user/login").permitAll()
+                                .requestMatchers(
+                                        "/internsathi/user/login",
+                                        "/internsathi/user/registerUser",
+                                        "/internsathi/user/resetPassword",
+                                        "/internsathi/user/otpVerification").permitAll()
                                 .requestMatchers("/internsathi/user/registerUser").permitAll()
                                 .anyRequest().authenticated()
                 )

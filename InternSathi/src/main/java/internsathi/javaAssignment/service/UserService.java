@@ -6,4 +6,8 @@ import internsathi.javaAssignment.dto.UserRegistrationResponseDto;
 public interface UserService {
 
     UserRegistrationResponseDto registerUser(UserRegistrationDto userRegistrationDetails) throws Exception;
+
+    boolean doesEmailAndUsernameExits(String username, String email);
+
+    void updatePassword(String username, String password);
 }

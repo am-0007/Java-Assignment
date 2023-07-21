@@ -2,6 +2,7 @@ package internsathi.javaAssignment.controller;
 
 import internsathi.javaAssignment.model.UserSecurity;
 import internsathi.javaAssignment.security.token.JwtTokenService;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -25,17 +26,19 @@ public class HomeDashboardController {
     }
 
     @GetMapping("/home")
-    public String homePage(Model model, Authentication authentication, Principal principal) {
+    public String homePage(Model model, Authentication authentication, Principal principal, HttpServletResponse response) {
         if (authentication.isAuthenticated()) {
             String loggedInUser = (String) authentication.getPrincipal();
             log.info("...{}", loggedInUser);
             String token;
             try {
                 token = jwtTokenService.generateToken(loggedInUser);
+                response.addHeader("Authorization", "Bearer " + token);
             } catch (Exception e) {
                 token = "1234";
                 throw new RuntimeException(e);
             }
+
             model.addAttribute("token", token);
             log.info("token {}", token);
         }

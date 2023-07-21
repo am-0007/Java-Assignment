@@ -20,11 +20,11 @@
 
 ## Login with following credentials:
 
-    - Admin:
+     Admin:
         username: am0007
         password: password
 
-    - User:
+     User:
         username: am007
         password: password
 

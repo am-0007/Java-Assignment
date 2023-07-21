@@ -8,33 +8,15 @@
 
 ## Instruction
 
-  ### Build all jars
-  [indent=0]
-  ---
-  ./gradlew build
-  ---
-
   ### Guide to run the project:
   
   - clone the repo
 
-  - change directory to internSathi:
-    [indent=0]
-    ---
-    `cd internSathi`
-    ---
+  - change directory to internSathi: `cd internSathi`
     
-  - Run the project with terminal command:
-    [indent=0]
-    ---
-     ./gradlew bootrun
-     ---
-    
-  - Open your browser and type:
-    [indent=0]
-    ---
-    `http://localhost:7999/internsathi/user/login`
-    ---
+  - Run the project with terminal command: `./gradlew bootrun`
+     
+  - Open your browser and type: `http://localhost:7999/internsathi/user/login`
 
 ## Point to consider
 

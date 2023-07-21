@@ -10,7 +10,7 @@
   
   - clone the repo
 
-  - change directory to internSathi: `cd internSathi`
+  - change directory to internSathi: `cd InternSathi`
   
   - build all jar: `./gradlew build`
     

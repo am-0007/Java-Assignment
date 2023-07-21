@@ -13,10 +13,12 @@
   - clone the repo
 
   - change directory to internSathi: `cd internSathi`
+  
+  - build all jar: `./gradlew build`
     
-  - Run the project with terminal command: `./gradlew bootrun`
+  - run the project with terminal command: `./gradlew bootrun`
      
-  - Open your browser and type: `http://localhost:7999/internsathi/user/login`
+  - open your browser and type: `http://localhost:7999/internsathi/user/login`
 
 ## Point to consider
 

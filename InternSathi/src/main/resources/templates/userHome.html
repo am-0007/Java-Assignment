@@ -26,70 +26,66 @@
 </header>
 
 <main>
-    <p>Welcome User, <h2 th:text="${principal}"></h2></p><br>
-    <h4>Bearer Token: <h3 th:text="${token}"></h3></h4>
+    <p>Welcome User, <h2 th:text="${principal}"></h2>
 
-    <div th:if="${admin}">
         <table>
             <thead>
             <h1>Perform Action: </h1>
             <tr>
                 <th>User ID</th>
+                <th>Name</th>
                 <th>Username</th>
                 <th>Email</th>
                 <th>Actions</th>
             </tr>
             </thead>
-            <tbody>
-                <tr th:each="user, iterator : ${userList}">
-                    <td th:text="${user.id}"></td>
-                    <td th:text="${user.name}"></td>
-                    <td th:text="${user.email}"></td>
-                    <td>
-                        <button class="update-button" th:onclick="'updateUser(' + ${user.id} + ')'">Update</button>
-                        <button class="delete-button" th:onclick="'deleteUser(' + ${user.id} + ')'">Delete</button>
-                    </td>
+            <div th:if="${admin}">
+                <tbody>
+                    <tr th:each="user, iterator : ${userList}">
+                        <div th:unless="${principal == user.username}">
+                            <td th:text="${user.id}"></td>
+                            <td th:text="${user.name}"></td>
+                            <td th:text="${user.username}"></td>
+                            <td th:text="${user.email}"></td>
+                            <td>
+                                <form th:action="@{/internsathi/admin/deleteUserById}" th:method="post">
+                                    <input type="hidden" name="userId" th:value="${user.id}" />
+                                    <button class="delete-button" type="submit">Delete</button>
+                                </form>
+                            </td>
+                        </div>
+                    </tr>
+                </tbody>
+            </div>
+            <div th:unless="${admin}">
+                <tr>
+                    <td colspan="5">You do not have permission to perform action</td>
                 </tr>
-            </tbody>
+            </div>
         </table>
-    </div>
+
 </main>
 
 <footer class="footer">
     <div class="footer-content">
-        Footer Content Here
+        <h5>
+            Please visit <a style="text-decoration: none" href="https://internsathi.com/">InternSathi.</a>
+        </h5>
     </div>
 </footer>
 </body>
 
 <script>
+
+    function storeTokenInLocalStorage(token) {
+        localStorage.setItem("token", token);
+    }
     function logout() {
         window.location.href = "/logout"
     }
 
     function deleteUser(userId) {
         console.log("Deleting user with ID: " + userId);
-        fetch(`/internsathi/admin/deleteUser?${userId}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                // Handle the response from the server (optional)
-                return response.json();
-            })
-            .then(data => {
-                console.log('Delete request successful', data);
-                // Refresh the page or update the table (optional)
-                // window.location.reload();
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
     }
 
     function updateUser(userId) {

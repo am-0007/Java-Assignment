@@ -4,14 +4,14 @@ import internsathi.javaAssignment.Enum.Role;
 import internsathi.javaAssignment.entity.User;
 import internsathi.javaAssignment.security.token.JwtTokenService;
 import internsathi.javaAssignment.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.ArrayList;
@@ -31,30 +31,35 @@ public class HomeDashboardController {
     }
 
     @GetMapping("/user/home")
-    public String userHomePage(Model model, Authentication authentication, Principal principal, HttpServletResponse response) {
+    public String userHomePage(Model model, Authentication authentication, Principal principal,
+                               HttpServletRequest request, HttpServletResponse response) {
         if (authentication.isAuthenticated()) {
-
             List<String> authorities = authentication.getAuthorities()
                     .stream()
                     .map(GrantedAuthority::getAuthority)
                     .toList();
-
-            String loggedInUser = (String) authentication.getPrincipal();
-            log.info("logged In: .......{}", loggedInUser);
             String token;
-            try {
+            String loggedInUser = (String) authentication.getPrincipal();
+            if (request.getHeader("Authorization") == null) {
 
-                token = jwtTokenService.generateToken(loggedInUser);
-                response.addHeader("Authorization", "Bearer " + token);
-                model.addAttribute("token", token);
-                model.addAttribute("principal", principal.getName());
+                log.info("logged In: .......{}", loggedInUser);
+                try {
 
-                log.info("token {}", token);
-            } catch (Exception e) {
-                token = "1234";
-                throw new RuntimeException(e);
+                    token = jwtTokenService.generateToken(loggedInUser);
+                    model.addAttribute("token", token);
+                    model.addAttribute("principal", principal.getName());
+                    response.addHeader("Authorization", token);
+                    log.info("token {}", token);
+
+                } catch (Exception e) {
+                    token = "1234";
+                    throw new RuntimeException(e);
+                }
             }
-
+            if (request.getHeader("Authorization") != null) {
+                token = request.getHeader("Authorization");
+                response.addHeader("Authorization", token);
+            }
             log.info("is Admin?...." + authorities.contains(Role.ADMIN.name()));
             if (authorities.contains(Role.ADMIN.name())) {
                 List<User> userList = getAllUser();
@@ -63,6 +68,13 @@ public class HomeDashboardController {
             }
         }
         return "userHome";
+    }
+
+    @PostMapping("/admin/deleteUserById")
+    public String deleteUserById(Model model, @RequestParam(value = "userId", defaultValue = "0") Long userId) {
+        userService.deleteUserById(userId);
+        return "redirect:/internsathi/user/home";
+
     }
 
     private List<User> getAllUser() {

@@ -77,4 +77,9 @@ public class UserServiceImplementation implements UserDetailsService, UserServic
     public List<User> getAllUser() {
         return userRepo.findAll();
     }
+
+    @Override
+    public void deleteUserById(Long userId) {
+        userRepo.deleteById(userId);
+    }
 }

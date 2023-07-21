@@ -31,8 +31,13 @@ public class HomeDashboardController {
     }
 
     @GetMapping("/user/home")
-    public String userHomePage(Model model, Authentication authentication, Principal principal,
+    public String userHomePage(Model model,
+                               @RequestHeader(value = "Authorization", defaultValue = "") String authHeader,
+                               Authentication authentication, Principal principal,
                                HttpServletRequest request, HttpServletResponse response) {
+
+        System.out.println(authHeader);
+        System.out.println(request.getHeader("Authorization"));
         if (authentication.isAuthenticated()) {
             List<String> authorities = authentication.getAuthorities()
                     .stream()

@@ -1,13 +1,13 @@
 package internsathi.javaAssignment.security;
 
-import internsathi.javaAssignment.security.filter.CustomAuthenticationFilter;
 import internsathi.javaAssignment.security.filter.JwtAuthenticationTokenFilter;
 import internsathi.javaAssignment.security.manager.CustomAuthenticationManager;
+import internsathi.javaAssignment.security.provider.CustomAuthenticationProvider;
 import internsathi.javaAssignment.security.token.JwtTokenService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -30,8 +30,10 @@ public class SecurityConfig {
         return http
                 .csrf()
                 .disable()
-                //.addFilterAt(new CustomAuthenticationFilter(authenticationManger, jwtTokenService), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(new JwtAuthenticationTokenFilter(userDetailsService, new JwtTokenService(userDetailsService)), UsernamePasswordAuthenticationFilter.class)
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .addFilterAt(new JwtAuthenticationTokenFilter(userDetailsService, new JwtTokenService(userDetailsService)), UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(
                         authorize -> authorize
                                 .requestMatchers("/css/**").permitAll()
@@ -39,7 +41,8 @@ public class SecurityConfig {
                                         "/internsathi/user/login",
                                         "/internsathi/user/registerUser",
                                         "/internsathi/user/resetPassword",
-                                        "/internsathi/user/otpVerification").permitAll()
+                                        "/internsathi/user/otpVerification",
+                                        "/internsathi/rc/login").permitAll()
                                 .requestMatchers("/internsathi/user/registerUser").permitAll()
                                 .anyRequest().authenticated()
                 )

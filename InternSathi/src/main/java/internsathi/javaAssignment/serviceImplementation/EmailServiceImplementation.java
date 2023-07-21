@@ -32,7 +32,7 @@ public class EmailServiceImplementation implements EmailService {
         simpleMailMessage.setFrom("ajaymaharjan0007@gmail.com");
         simpleMailMessage.setTo(emailMessage.getMailTo());
         simpleMailMessage.setSubject(EmailMessage.EMAIL_SUBJECT);
-        simpleMailMessage.setText(emailMessage + otpKey);
+        simpleMailMessage.setText(emailMessage.getMessage() + otpKey);
 
         this.javaMailSender.send(simpleMailMessage);
     }

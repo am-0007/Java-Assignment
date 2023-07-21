@@ -1,5 +1,6 @@
 package internsathi.javaAssignment.security.filter;
 
+import internsathi.javaAssignment.security.provider.CustomAuthenticationProvider;
 import internsathi.javaAssignment.security.token.JwtTokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -12,6 +13,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -35,14 +37,17 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
                 if (jwtTokenService.validateToken(token, userDetails)) {
+                    System.out.println(userDetails.getPassword());
                     UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                             userDetails,
                             null,
                             userDetails.getAuthorities()
                     );
-
                     authenticationToken.setDetails(new WebAuthenticationDetails(request));
-                    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+
+                    if (authenticationToken.isAuthenticated()) {
+                        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                    }
                 }
             }
         }

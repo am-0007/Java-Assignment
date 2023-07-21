@@ -48,9 +48,14 @@
                             <td th:text="${user.username}"></td>
                             <td th:text="${user.email}"></td>
                             <td>
+                                <!--<form th:action="@{/internsathi/admin/deleteUserById}" th:method="post">
+                                    <input type="hidden" name="userId" th:value="${user.id}" />
+                                    <input type="hidden" name="Authorization" th:value="'Bearer ' + ${token}" />
+                                    <button class="delete-button" type="submit">Delete</button>
+                                </form>-->
                                 <form th:action="@{/internsathi/admin/deleteUserById}" th:method="post">
                                     <input type="hidden" name="userId" th:value="${user.id}" />
-                                    <button class="delete-button" type="submit">Delete</button>
+                                    <button class="delete-button" type="submit" onclick="deleteUser(event, ${token})">Delete</button>
                                 </form>
                             </td>
                         </div>
@@ -84,8 +89,33 @@
         window.location.href = "/logout"
     }
 
-    function deleteUser(userId) {
+    function deleteUser(event, token) {
+        event.preventDefault();
+        const userId = event.target.form.elements["userId"].value;
         console.log("Deleting user with ID: " + userId);
+
+        fetch(`/internsathi/admin/deleteUserById?userId=${userId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                // Handle the response from the server (optional)
+                return response.json();
+            })
+            .then(data => {
+                console.log('Delete request successful', data);
+                // Refresh the page or update the table (optional)
+                // window.location.reload();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     }
 
     function updateUser(userId) {

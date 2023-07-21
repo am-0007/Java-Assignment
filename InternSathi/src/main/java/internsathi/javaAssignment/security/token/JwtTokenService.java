@@ -39,11 +39,12 @@ public class JwtTokenService {
         userDetails.getAuthorities().forEach(
                 grantedAuthority -> roles.add(Role.valueOf(grantedAuthority.getAuthority()))
         );
-        Map<String, Object> authority = new HashMap<>();
-        authority.put("Role", roles);
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("Role", roles);
+        claims.put("sub", username);
+
         return  Jwts.builder()
-                .setSubject(username)
-                .setClaims(authority)
+                .setClaims(claims)
                 .setIssuedAt(new Date())
                 .setExpiration(generateExpirationDate())
                 .signWith(getSignInKey(), SIGNATURE_ALGORITHM)
@@ -71,7 +72,7 @@ public class JwtTokenService {
         try {
             final Claims claims = this.getAllClaimsFromToken(token);
             assert claims != null;
-            username = claims.getSubject();
+            username = (String) claims.get("sub");
         } catch (Exception exception) {
             return null;
         }

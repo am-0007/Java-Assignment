@@ -8,26 +8,24 @@
 </head>
 <body>
 <div class="container">
-  <header>
-    <div class="logo">OTP Verification</div>
-  </header>
+    <div class="logo">
+      <h1>InternSathi</h1>
+    </div>
   <main>
     <div class="otp-form">
-      <div th:if="${error}">
+      <div th:if="${error}" class="error-message">
         Otp mismatch. Provide correct key.</div>
-      <h1>Enter OTP</h1>
       <form th:object="${otpKey}" th:action="@{/internsathi/user/otpVerification}" th:method="POST" th:param="${username}" onsubmit="setPassword()">
         <div class="form-group">
           <input type="hidden" name="username" th:value="${username}" />
           <input type="hidden" name="password" id="password"/>
-          <label for="otpKey">OTP:</label>
-          <input type="text" id="otpKey" name="otpKey" required>
+          <label for="otpKey"><h4>OTP:</h4></label>
+          <input type="text" id="otpKey" name="otpKey" PLACEHOLDER="OTP key" required>
         </div>
         <div class="form-group">
           <button type="submit">Verify</button>
         </div>
       </form>
-      <div class="resend-otp">Didn't receive OTP? <a href="#">Resend OTP</a></div>
     </div>
   </main>
 </div>
@@ -38,7 +36,6 @@
 
   function setPassword() {
     document.getElementById("password").value = retrievePassword();
-    alert("...");
   }
 </script>
 </body>

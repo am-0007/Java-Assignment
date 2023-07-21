@@ -3,6 +3,7 @@ package internsathi.javaAssignment.serviceImplementation;
 import internsathi.javaAssignment.dto.UserRegistrationDto;
 import internsathi.javaAssignment.dto.UserRegistrationResponseDto;
 import internsathi.javaAssignment.entity.EmailMessage;
+import internsathi.javaAssignment.entity.User;
 import internsathi.javaAssignment.mapper.UserMapper;
 import internsathi.javaAssignment.model.UserSecurity;
 import internsathi.javaAssignment.repository.UserRepository;
@@ -15,6 +16,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -69,5 +71,10 @@ public class UserServiceImplementation implements UserDetailsService, UserServic
         password = passwordEncoder.encode(password);
         userRepo.updateUserPassword(username, password);
 
+    }
+
+    @Override
+    public List<User> getAllUser() {
+        return userRepo.findAll();
     }
 }

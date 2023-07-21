@@ -1,5 +1,6 @@
 package internsathi.javaAssignment.controller;
 
+import internsathi.javaAssignment.Enum.Role;
 import internsathi.javaAssignment.dto.LoginDto;
 import internsathi.javaAssignment.dto.ResetPasswordDto;
 import internsathi.javaAssignment.security.token.JwtTokenService;
@@ -8,9 +9,15 @@ import internsathi.javaAssignment.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 //@RestController
 @Controller
@@ -56,10 +63,14 @@ public class UserController {
 
     @PostMapping("/login")
     public String login(Model model, Authentication authentication) {
+        List<String> authorities = authentication.getAuthorities()
+                .stream()
+                .map(GrantedAuthority::getAuthority)
+                .toList();
+        System.out.println("...." + authorities.contains(Role.ADMIN.name()));
         if (authentication.isAuthenticated()) {
             return "redirect:/internsathi/user/home";
         }
-        System.out.println(authentication.isAuthenticated());
         return "redirect:/internsathi/user/login?error=true";
     }
 

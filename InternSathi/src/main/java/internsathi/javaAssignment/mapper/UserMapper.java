@@ -46,6 +46,19 @@ public interface UserMapper {
                 .email(registrationDto.getEmail())
                 .phoneNumber(registrationDto.getPhoneNumber())
                 .password(registrationDto.getPassword())
+                .role(registrationDto.getRole())
+                .build();
+    }
+
+    default User conversionFromRegistrationDtoToAdminUser(UserRegistrationDto registrationDto) {
+        return User.builder()
+                .username(registrationDto.getUsername())
+                .name(registrationDto.getName())
+                .address(registrationDto.getAddress())
+                .dateOfBirth(registrationDto.getDateOfBirth())
+                .email(registrationDto.getEmail())
+                .phoneNumber(registrationDto.getPhoneNumber())
+                .password(registrationDto.getPassword())
                 .role(Role.USER.name())
                 .build();
 

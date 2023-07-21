@@ -177,3 +177,46 @@ footer {
     text-decoration: none;
     color: white;
 }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+a.delete-user-link {
+    color: #dc3545;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+a.delete-user-link:hover {
+    text-decoration: underline;
+}
+
+button.update-button,
+button.delete-button {
+    margin-right: 10px;
+    padding: 8px 15px;
+    background-color: #007bff;
+    border: none;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button.update-button:hover,
+button.delete-button:hover {
+    background-color: #0056b3;
+}
